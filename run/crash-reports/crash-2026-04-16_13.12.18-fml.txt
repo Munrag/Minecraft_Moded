@@ -1,0 +1,123 @@
+---- Minecraft Crash Report ----
+// There are four lights!
+
+Time: 2026-04-16 13:12:18
+Description: Mod loading failures have occurred; consult the issue messages for more details
+
+net.neoforged.neoforge.logging.CrashReportExtender$ModLoadingCrashException: Mod loading has failed
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Render thread
+Stacktrace:
+	at TRANSFORMER/neoforge@21.1.226/net.neoforged.neoforge.common.NeoForge.lambda$static$0(NeoForge.java:19) ~[neoforge-21.1.226.jar%23190!/:?] {re:classloading}
+-- Mod loading issue for: souls_mod --
+Details:
+	Caused by 0: java.lang.IllegalArgumentException: Method public void com.munrag.soulsmod.souls_mod.Souls_mod.registerAttributes(net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent) has @SubscribeEvent annotation, but takes an argument that is not valid for this busclass net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent
+		at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.registerListener(EventBus.java:180) ~[bus-8.0.5.jar%23150!/:?] {}
+		at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.register(EventBus.java:111) ~[bus-8.0.5.jar%23150!/:?] {}
+		at TRANSFORMER/souls_mod@1.0-SNAPSHOT/com.munrag.soulsmod.souls_mod.Souls_mod.<init>(Souls_mod.java:86) ~[%23191!/:?] {re:classloading}
+		at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[?:?] {}
+		at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502) ~[?:?] {}
+		at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486) ~[?:?] {}
+		at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.javafmlmod.FMLModContainer.constructMod(FMLModContainer.java:115) ~[loader-4.0.42.jar%23146!/:4.0] {}
+		at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.ModLoader.lambda$constructMods$3(ModLoader.java:153) ~[loader-4.0.42.jar%23146!/:4.0] {}
+		at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.ModLoader.lambda$dispatchParallelTask$7(ModLoader.java:231) ~[loader-4.0.42.jar%23146!/:4.0] {}
+		at java.base/java.util.concurrent.CompletableFuture.uniHandle(CompletableFuture.java:934) ~[?:?] {}
+		at java.base/java.util.concurrent.CompletableFuture$UniHandle.tryFire(CompletableFuture.java:911) ~[?:?] {}
+		at java.base/java.util.concurrent.CompletableFuture$Completion.exec(CompletableFuture.java:483) ~[?:?] {}
+		at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387) ~[?:?] {}
+		at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312) ~[?:?] {}
+		at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843) ~[?:?] {}
+		at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808) ~[?:?] {}
+		at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188) ~[?:?] {}
+
+	Mod file: /Z:/Minecraft/Minecraft1.21.1/build/classes/java/main/
+	Failure message: SoulsMonarch (souls_mod) has failed to load correctly
+		java.lang.IllegalArgumentException: Method public void com.munrag.soulsmod.souls_mod.Souls_mod.registerAttributes(net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent) has @SubscribeEvent annotation, but takes an argument that is not valid for this busclass net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent
+	Mod version: 1.0-SNAPSHOT
+	Mod issues URL: <No issues URL found>
+	Exception message: java.lang.IllegalArgumentException: IModBusEvent events are not allowed on the common NeoForge bus! Use a mod bus instead.
+Stacktrace:
+	at TRANSFORMER/neoforge@21.1.226/net.neoforged.neoforge.common.NeoForge.lambda$static$0(NeoForge.java:19) ~[neoforge-21.1.226.jar%23190!/:?] {re:classloading}
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.registerListener(EventBus.java:178) ~[bus-8.0.5.jar%23150!/:?] {}
+	at MC-BOOTSTRAP/net.neoforged.bus/net.neoforged.bus.EventBus.register(EventBus.java:111) ~[bus-8.0.5.jar%23150!/:?] {}
+	at TRANSFORMER/souls_mod@1.0-SNAPSHOT/com.munrag.soulsmod.souls_mod.Souls_mod.<init>(Souls_mod.java:86) ~[%23191!/:?] {re:classloading}
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[?:?] {}
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502) ~[?:?] {}
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486) ~[?:?] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.javafmlmod.FMLModContainer.constructMod(FMLModContainer.java:115) ~[loader-4.0.42.jar%23146!/:4.0] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.ModLoader.lambda$constructMods$3(ModLoader.java:153) ~[loader-4.0.42.jar%23146!/:4.0] {}
+	at MC-BOOTSTRAP/fml_loader@4.0.42/net.neoforged.fml.ModLoader.lambda$dispatchParallelTask$7(ModLoader.java:231) ~[loader-4.0.42.jar%23146!/:4.0] {}
+	at java.base/java.util.concurrent.CompletableFuture.uniHandle(CompletableFuture.java:934) ~[?:?] {}
+	at java.base/java.util.concurrent.CompletableFuture$UniHandle.tryFire(CompletableFuture.java:911) ~[?:?] {}
+	at java.base/java.util.concurrent.CompletableFuture$Completion.exec(CompletableFuture.java:483) ~[?:?] {}
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387) ~[?:?] {}
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312) ~[?:?] {}
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843) ~[?:?] {}
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808) ~[?:?] {}
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188) ~[?:?] {}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.21.1
+	Minecraft Version ID: 1.21.1
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 21.0.10, Eclipse Adoptium
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Eclipse Adoptium
+	Memory: 230690896 bytes (220 MiB) / 629145600 bytes (600 MiB) up to 8573157376 bytes (8176 MiB)
+	CPUs: 12
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Ryzen 5 2600 Six-Core Processor            
+	Identifier: AuthenticAMD Family 23 Model 8 Stepping 2
+	Microarchitecture: Zen+
+	Frequency (GHz): 3.39
+	Number of physical packages: 1
+	Number of physical CPUs: 6
+	Number of logical CPUs: 12
+	Graphics card #0 name: NVIDIA GeForce GTX 1080
+	Graphics card #0 vendor: NVIDIA
+	Graphics card #0 VRAM (MiB): 8192.00
+	Graphics card #0 deviceId: VideoController1
+	Graphics card #0 versionInfo: 32.0.15.8157
+	Memory slot #0 capacity (MiB): 16384.00
+	Memory slot #0 clockSpeed (GHz): 2.40
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MiB): 16384.00
+	Memory slot #1 clockSpeed (GHz): 2.40
+	Memory slot #1 type: DDR4
+	Virtual memory max (MiB): 59323.01
+	Virtual memory used (MiB): 15973.22
+	Swap memory total (MiB): 26624.00
+	Swap memory used (MiB): 5.50
+	Space in storage for jna.tmpdir (MiB): <path not set>
+	Space in storage for org.lwjgl.system.SharedLibraryExtractPath (MiB): <path not set>
+	Space in storage for io.netty.native.workdir (MiB): <path not set>
+	Space in storage for java.io.tmpdir (MiB): available: 6980.64, total: 227420.14
+	Space in storage for workdir (MiB): available: 692089.69, total: 1907712.00
+	JVM Flags: 0 total; 
+	ModLauncher: 11.0.5+main.901c6ea8
+	ModLauncher launch target: forgeclientdev
+	ModLauncher services: 
+		sponge-mixin-0.15.2+mixin.0.8.7.jar mixin PLUGINSERVICE 
+		loader-4.0.42.jar slf4jfixer PLUGINSERVICE 
+		loader-4.0.42.jar runtime_enum_extender PLUGINSERVICE 
+		at-modlauncher-10.0.1.jar accesstransformer PLUGINSERVICE 
+		loader-4.0.42.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-11.0.5.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-11.0.5.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		javafml@4.0
+		lowcodefml@4.0
+		minecraft@4.0
+	Mod List: 
+		neoforge-21.1.226.jar                             |Minecraft                     |minecraft                     |1.21.1              |Manifest: NOSIGNATURE
+		neoforge-21.1.226.jar                             |NeoForge                      |neoforge                      |21.1.226            |Manifest: NOSIGNATURE
+		main                                              |SoulsMonarch                  |souls_mod                     |1.0-SNAPSHOT        |Manifest: NOSIGNATURE
+	Crash Report UUID: e1b5d6b5-fd8a-44be-9386-6359cdbf8947
+	FML: 4.0.42
+	NeoForge: 21.1.226

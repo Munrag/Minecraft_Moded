@@ -1,0 +1,23 @@
+/give Munrag minecraft:experience_bottle 20
+/experience set Munrag 0
+/experience query Munrag levels 1
+/experience set Munrag 1 levels
+/experience set Munrag 0 levels
+/give Munrag souls_mod:monarch_book
+/experience add Munrag 15 levels
+/give Munrag minecraft:potion
+/time set day
+/give Munrag swor
+/give Munrag minecraft:netherite_sword
+/give Munrag minecraft:netherite_chestplate
+/give Munrag mona
+/give Munrag souls_mod:monarch_book
+/experience add Munrag 50 levels
+/attribute Munrag minecraft:generic.max_health base set 100
+/give Munrag minecraft:golden_apple
+/give Munrag minecraft:golden_apple 50
+/give Munrag minecraft:spawner
+/give Munrag minecraft:zombie_spawn_egg 100
+/give Munrag minecraft:polar_bear_spawn_egg
+/give Munrag minecraft:wither_skeleton_spawn_egg
+/give Munrag minecraft:polar_bear_spawn_egg
