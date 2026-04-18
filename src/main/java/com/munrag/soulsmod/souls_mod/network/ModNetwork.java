@@ -32,6 +32,16 @@ public class ModNetwork {
                 }
         );
 
+        registrar.playToClient(
+                SoulSyncPayload.TYPE,
+                SoulSyncPayload.STREAM_CODEC,
+                (payload, context) -> {
+                    context.enqueueWork(() -> {
+                        com.munrag.soulsmod.souls_mod.client.gui.ClientSoulData.set(payload.souls());
+                    });
+                }
+        );
+
         // --- 2. NUEVO: Cliente -> Servidor (Para invocar) ---
         registrar.playToServer(
                 SummonMobPayload.TYPE,
