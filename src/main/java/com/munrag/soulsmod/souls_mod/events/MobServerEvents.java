@@ -2,6 +2,7 @@ package com.munrag.soulsmod.souls_mod.events;
 
 import com.munrag.soulsmod.souls_mod.registry.ModAttachments;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -9,6 +10,7 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 
+import com.munrag.soulsmod.souls_mod.entity.ai.FollowMonarchGoal;
 import java.util.UUID;
 
 @EventBusSubscriber(modid = "souls_mod")
@@ -24,6 +26,10 @@ public class MobServerEvents {
                 // Also clear standard goals just to be safe they don't do weird vanilla AI stuff,
                 // but the prompt only explicitly asked for targetSelector.
                 // Let's stick to targetSelector to ensure they just don't attack the player (or anyone).
+
+                if (mob instanceof PathfinderMob pathfinderMob) {
+                    pathfinderMob.goalSelector.addGoal(3, new FollowMonarchGoal(pathfinderMob, 1.25));
+                }
             }
         }
     }
