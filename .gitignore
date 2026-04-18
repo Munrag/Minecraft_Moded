@@ -1,0 +1,11 @@
+# Archivos de caché y compilación de Gradle
+.gradle/
+build/
+out/
+
+# Archivos temporales de ejecución de Minecraft
+run/
+
+# Archivos de configuración locales de tu IntelliJ (no deben ir a la nube)
+.idea/
+*.iml
