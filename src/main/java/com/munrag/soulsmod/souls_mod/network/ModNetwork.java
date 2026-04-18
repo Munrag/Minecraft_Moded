@@ -62,8 +62,14 @@ public class ModNetwork {
                                 ManaServerEvents.syncMana(player);
 
                                 // --- NUEVO SISTEMA DE INVOCACIÓN DE SOMBRAS LEALES ---
-
-                                player.displayClientMessage(net.minecraft.network.chat.Component.literal("§cEl sistema de invocación se está reestructurando a vainilla."), true);
+                                EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(payload.entityId()));
+                                if (entityType != null) {
+                                    Entity entity = entityType.create(player.serverLevel());
+                                    if (entity != null) {
+                                        entity.setPos(player.getX(), player.getY(), player.getZ());
+                                        player.level().addFreshEntity(entity);
+                                    }
+                                }
                             }
                         }
                     });
