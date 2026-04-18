@@ -7,6 +7,9 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import com.munrag.soulsmod.souls_mod.world.soul.CapturedSoul;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -28,8 +31,19 @@ public class MonarchArmyScreen extends Screen {
     public MonarchArmyScreen() {
         super(Component.literal("MONARCH MOD MENU"));
 
-        // Maniquí temporal con estadísticas falsas (20 hp, 2 armadura, 3 daño, 10 maná)
-        mobList.add(new MobEntry("Zombie", "Sin alma", "Captura un alma para verla aquí...", 20, 2, 3, 10, net.minecraft.world.entity.EntityType.ZOMBIE));
+        List<CapturedSoul> souls = com.munrag.soulsmod.souls_mod.client.gui.ClientSoulData.get();
+        for (CapturedSoul soul : souls) {
+            String species = soul.mobType().replace("minecraft:", "");
+            EntityType<? extends LivingEntity> type = (EntityType<? extends LivingEntity>) BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(soul.mobType()));
+
+            mobList.add(new MobEntry(
+                    species,
+                    soul.customName(),
+                    "A loyal shadow serving the Monarch.",
+                    20, 2, 3, 10,
+                    type
+            ));
+        }
     }
 
     @Override

@@ -1,0 +1,11 @@
+--- src/main/java/com/munrag/soulsmod/souls_mod/client/gui/MonarchArmyScreen.java
++++ src/main/java/com/munrag/soulsmod/souls_mod/client/gui/MonarchArmyScreen.java
+@@ -7,6 +7,9 @@
+ import net.minecraft.network.chat.Component;
+ import net.minecraft.world.entity.EntityType;
+ import net.minecraft.world.entity.LivingEntity;
++import net.minecraft.core.registries.BuiltInRegistries;
++import net.minecraft.resources.ResourceLocation;
++import com.munrag.soulsmod.souls_mod.world.soul.CapturedSoul;
+ import org.joml.Quaternionf;
+ import org.joml.Vector3f;
