@@ -24,4 +24,10 @@ public class ModAttachments {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<com.munrag.soulsmod.souls_mod.world.soul.PlayerSouls>> PLAYER_SOULS =
             ATTACHMENT_TYPES.register("player_souls", () -> AttachmentType.builder(() -> new com.munrag.soulsmod.souls_mod.world.soul.PlayerSouls())
                     .serialize(com.munrag.soulsmod.souls_mod.world.soul.PlayerSouls.CODEC).build());
+
+    public static final Supplier<AttachmentType<java.util.UUID>> OWNER_UUID = ATTACHMENT_TYPES.register(
+            "owner_uuid",
+            () -> AttachmentType.builder(() -> new java.util.UUID(0, 0))
+                    .serialize(net.minecraft.core.UUIDUtil.CODEC).build()
+    );
 }
