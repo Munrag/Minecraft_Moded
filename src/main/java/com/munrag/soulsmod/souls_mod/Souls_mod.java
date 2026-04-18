@@ -131,7 +131,5 @@ public class Souls_mod {
     }
     // Le quitamos el @SubscribeEvent
     public void registerAttributes(net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent event) {
-        event.put(com.munrag.soulsmod.souls_mod.registry.ModEntities.SHADOW_ZOMBIE.get(),
-                com.munrag.soulsmod.souls_mod.entity.monster.shadow.ShadowZombie.createAttributes().build());
     }
 }
