@@ -28,12 +28,8 @@ public class MonarchArmyScreen extends Screen {
     public MonarchArmyScreen() {
         super(Component.literal("MONARCH MOD MENU"));
 
-        // ¡Cambiamos EntityType.ZOMBIE por nuestro SHADOW_ZOMBIE!
-        mobList.add(new MobEntry("Zombie", "Runt", "A slow but sturdy undead. Good for soaking up initial damage.", 20, 2, 3, 14,
-                com.munrag.soulsmod.souls_mod.registry.ModEntities.SHADOW_ZOMBIE.get()));
-
-        mobList.add(new MobEntry("Spider", "Widow", "Fast and agile. Can climb walls and inflict poison.", 16, 0, 2, 12, EntityType.SPIDER));
-        mobList.add(new MobEntry("Skeleton", "Archer", "Low health but good ranged support.", 20, 0, 4, 40, EntityType.SKELETON));
+        // Maniquí temporal con estadísticas falsas (20 hp, 2 armadura, 3 daño, 10 maná)
+        mobList.add(new MobEntry("Zombie", "Sin alma", "Captura un alma para verla aquí...", 20, 2, 3, 10, net.minecraft.world.entity.EntityType.ZOMBIE));
     }
 
     @Override
