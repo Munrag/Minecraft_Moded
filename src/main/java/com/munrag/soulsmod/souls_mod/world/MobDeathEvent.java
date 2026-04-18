@@ -2,6 +2,7 @@ package com.munrag.soulsmod.souls_mod.world;
 
 import com.munrag.soulsmod.souls_mod.entity.soul.SoulEntity;
 import com.munrag.soulsmod.souls_mod.registry.ModEntities;
+import com.munrag.soulsmod.souls_mod.registry.ModAttachments;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.monster.Monster;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -15,6 +16,10 @@ public class MobDeathEvent {
     public static void onMobDeath(LivingDeathEvent event) {
         // Nos aseguramos de que esto corra en el Servidor y que el muerto sea un Monstruo (no queremos almas de vacas ni de jugadores por ahora)
         if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof Monster monster) {
+
+            if (monster.hasData(ModAttachments.OWNER_UUID)) {
+                return;
+            }
 
             // Probabilidad de soltar el alma (1.0f = 100% para pruebas)
             if (monster.level().random.nextFloat() <= 1.0f) {

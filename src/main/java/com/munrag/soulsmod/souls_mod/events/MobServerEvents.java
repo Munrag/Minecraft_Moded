@@ -9,6 +9,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
+import net.neoforged.neoforge.event.entity.living.LivingConversionEvent;
 
 import com.munrag.soulsmod.souls_mod.entity.ai.FollowMonarchGoal;
 import java.util.UUID;
@@ -50,6 +51,15 @@ public class MobServerEvents {
             if (event.getSource().getEntity() instanceof Mob attacker && attacker.hasData(ModAttachments.OWNER_UUID)) {
                 event.setCanceled(true);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLivingConversionPre(LivingConversionEvent.Pre event) {
+        if (event.getEntity() instanceof Mob mob && mob.hasData(ModAttachments.OWNER_UUID)) {
+            // Cancel the conversion event so the summoned zombie dies instead of becoming a drowned and losing its owner
+            event.setCanceled(true);
+            event.setConversionTimer(0);
         }
     }
 }
