@@ -62,7 +62,10 @@ public class MonarchArmyScreen extends Screen {
             MobEntry selected = mobList.get(selectedIndex);
 
             // Obtenemos el ID oficial de Minecraft para este mob (ej. "minecraft:zombie")
-            String entityId = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(selected.type).toString();
+            String entityId = selected.species;
+            if (!entityId.contains(":")) {
+                entityId = "minecraft:" + entityId;
+            }
 
             // ¡Enviamos la carta al Servidor!
             net.neoforged.neoforge.network.PacketDistributor.sendToServer(new com.munrag.soulsmod.souls_mod.network.SummonMobPayload(entityId, selected.mana));
