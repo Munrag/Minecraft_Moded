@@ -7,6 +7,9 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import com.munrag.soulsmod.souls_mod.world.soul.CapturedSoul;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -28,12 +31,19 @@ public class MonarchArmyScreen extends Screen {
     public MonarchArmyScreen() {
         super(Component.literal("MONARCH MOD MENU"));
 
-        // ¡Cambiamos EntityType.ZOMBIE por nuestro SHADOW_ZOMBIE!
-        mobList.add(new MobEntry("Zombie", "Runt", "A slow but sturdy undead. Good for soaking up initial damage.", 20, 2, 3, 14,
-                com.munrag.soulsmod.souls_mod.registry.ModEntities.SHADOW_ZOMBIE.get()));
+        List<CapturedSoul> souls = com.munrag.soulsmod.souls_mod.client.gui.ClientSoulData.get();
+        for (CapturedSoul soul : souls) {
+            String species = soul.mobType().replace("minecraft:", "");
+            EntityType<? extends LivingEntity> type = (EntityType<? extends LivingEntity>) BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(soul.mobType()));
 
-        mobList.add(new MobEntry("Spider", "Widow", "Fast and agile. Can climb walls and inflict poison.", 16, 0, 2, 12, EntityType.SPIDER));
-        mobList.add(new MobEntry("Skeleton", "Archer", "Low health but good ranged support.", 20, 0, 4, 40, EntityType.SKELETON));
+            mobList.add(new MobEntry(
+                    species,
+                    soul.customName(),
+                    "A loyal shadow serving the Monarch.",
+                    20, 2, 3, 10,
+                    type
+            ));
+        }
     }
 
     @Override
