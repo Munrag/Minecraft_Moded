@@ -53,42 +53,10 @@ public class ModNetwork {
 
                                 // --- NUEVO SISTEMA DE INVOCACIÓN DE SOMBRAS LEALES ---
 
-                                // 1. Verificamos que sea un zombi para nuestra prueba (luego escalaremos a arañas)
-                                if (payload.entityId().equals("souls_mod:shadow_zombie")) {
-
-                                    // 2. Creamos INSTANCIA DIRECTA de nuestra clase ShadowZombie
-                                    com.munrag.soulsmod.souls_mod.entity.monster.shadow.ShadowZombie shadowZombie =
-                                            com.munrag.soulsmod.souls_mod.registry.ModEntities.SHADOW_ZOMBIE.get().create(player.serverLevel());
-
-                                    if (shadowZombie != null) {
-                                        // ¡IMPORTANTE: Lealtad! Le asignamos al jugador como Monarca
-                                        shadowZombie.setOwnerUUID(player.getUUID());
-
-                                        // --- Mantenemos tu lógica de Posición inteligente frente al jugador ---
-                                        float yRot = player.getYRot() * ((float)Math.PI / 180F);
-                                        double spawnX = player.getX() + (-Math.sin(yRot) * 2.0);
-                                        double spawnY = player.getY();
-                                        double spawnZ = player.getZ() + (Math.cos(yRot) * 2.0);
-                                        net.minecraft.core.BlockPos targetPos = net.minecraft.core.BlockPos.containing(spawnX, spawnY, spawnZ);
-                                        if (!player.level().getBlockState(targetPos).getCollisionShape(player.level(), targetPos).isEmpty()) {
-                                            spawnX = player.getX(); spawnZ = player.getZ();
-                                        }
-
-                                        shadowZombie.setPos(spawnX, spawnY, spawnZ);
-                                        player.serverLevel().addFreshEntity(shadowZombie);
-
-                                        // Efecto de sonido
-                                        player.level().playSound(null, player.blockPosition(),
-                                                net.minecraft.sounds.SoundEvents.EVOKER_CAST_SPELL, net.minecraft.sounds.SoundSource.PLAYERS, 1.0F, 1.0F);
-                                    }
-                                } else {
-                                    // Si eliges otro mob en el menú, por ahora invoca al vanilla (hasta que hagamos ShadowSpider, etc.)
-                                    player.displayClientMessage(net.minecraft.network.chat.Component.literal("§cSolo el Zombie Leal está programado por ahora."), true);
-                                }
-                        }
-                    }
+                                player.displayClientMessage(net.minecraft.network.chat.Component.literal("§cEl sistema de invocación se está reestructurando a vainilla."), true);
                             }
-                        );
+                        }
+                    });
                 }
         );
         // --- FASE 3: Procesar apuesta del Alma ---
