@@ -67,6 +67,8 @@ public class ModNetwork {
                                     Entity entity = entityType.create(player.serverLevel());
                                     if (entity != null) {
                                         entity.setPos(player.getX(), player.getY(), player.getZ());
+                                        // Asignamos el UUID del jugador usando el nuevo attachment
+                                        entity.setData(ModAttachments.OWNER_UUID, player.getUUID());
                                         player.level().addFreshEntity(entity);
                                     }
                                 }
