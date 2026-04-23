@@ -23,3 +23,5 @@
 /give Munrag minecraft:polar_bear_spawn_egg
 /time set day
 /give Dev souls_mod:monarch_book
+/give Dev minecraft:dirt 60
+/give Dev minecraft:drowned_spawn_egg 50

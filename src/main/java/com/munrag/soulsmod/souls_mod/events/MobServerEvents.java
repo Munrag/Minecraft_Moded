@@ -7,11 +7,12 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 import net.neoforged.neoforge.event.entity.living.LivingConversionEvent;
 
 import com.munrag.soulsmod.souls_mod.entity.ai.FollowMonarchGoal;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+
 import java.util.UUID;
 
 @EventBusSubscriber(modid = "souls_mod")
@@ -39,14 +40,14 @@ public class MobServerEvents {
     public static void onLivingChangeTarget(LivingChangeTargetEvent event) {
         if (event.getEntity() instanceof Mob mob && mob.hasData(ModAttachments.OWNER_UUID)) {
             UUID ownerUuid = mob.getData(ModAttachments.OWNER_UUID);
-            if (event.getNewTarget() != null && event.getNewTarget().getUUID().equals(ownerUuid)) {
+            if (event.getOriginalAboutToBeSetTarget() instanceof net.minecraft.world.entity.player.Player) {
                 event.setCanceled(true);
             }
         }
     }
 
     @SubscribeEvent
-    public static void onLivingAttack(LivingAttackEvent event) {
+    public static void onLivingAttack(LivingIncomingDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             if (event.getSource().getEntity() instanceof Mob attacker && attacker.hasData(ModAttachments.OWNER_UUID)) {
                 event.setCanceled(true);
