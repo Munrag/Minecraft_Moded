@@ -21,6 +21,10 @@ public class PlayerSouls {
         this.souls.add(soul);
     }
 
+    public void removeSoul(String customName) {
+        this.souls.removeIf(soul -> soul.customName().equals(customName));
+    }
+
     public List<CapturedSoul> getSouls() {
         return this.souls;
     }
