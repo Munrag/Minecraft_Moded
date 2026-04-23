@@ -108,6 +108,21 @@ public class ModNetwork {
                     });
                 }
         );
+
+        // --- FASE 5: Eliminar Alma ---
+        registrar.playToServer(
+                RemoveSoulPayload.TYPE,
+                RemoveSoulPayload.STREAM_CODEC,
+                (payload, context) -> {
+                    context.enqueueWork(() -> {
+                        if (context.player() instanceof net.minecraft.server.level.ServerPlayer player) {
+                            com.munrag.soulsmod.souls_mod.world.soul.PlayerSouls soulData = player.getData(com.munrag.soulsmod.souls_mod.registry.ModAttachments.PLAYER_SOULS);
+                            soulData.removeSoul(payload.customName());
+                            context.reply(new SoulSyncPayload(soulData.getSouls()));
+                        }
+                    });
+                }
+        );
     }
 
 }

@@ -58,7 +58,7 @@ public class MonarchArmyScreen extends Screen {
         int invX = this.leftPos + this.imageWidth - 85;
         int invY = this.topPos + this.imageHeight - 25;
         this.addRenderableWidget(Button.builder(Component.literal("INVOCAR"), b -> {
-
+            if (mobList.isEmpty()) return;
             MobEntry selected = mobList.get(selectedIndex);
 
             // Obtenemos el ID oficial de Minecraft para este mob (ej. "minecraft:zombie")
@@ -74,6 +74,31 @@ public class MonarchArmyScreen extends Screen {
             this.minecraft.setScreen(null);
 
         }).bounds(invX, invY, 75, 18).build());
+
+        // Botón LIBERAR
+        int libX = this.leftPos + this.imageWidth - 170;
+        int libY = this.topPos + this.imageHeight - 25;
+        this.addRenderableWidget(Button.builder(Component.literal("LIBERAR"), b -> {
+            if (mobList.isEmpty()) return;
+            MobEntry selected = mobList.get(selectedIndex);
+
+            // ¡Enviamos el Payload al Servidor!
+            net.neoforged.neoforge.network.PacketDistributor.sendToServer(new com.munrag.soulsmod.souls_mod.network.RemoveSoulPayload(selected.customName));
+
+            // Eliminar visualmente y recargar
+            mobList.remove(selectedIndex);
+
+            // Actualizar ClientSoulData localmente
+            List<com.munrag.soulsmod.souls_mod.world.soul.CapturedSoul> currentSouls = new ArrayList<>(com.munrag.soulsmod.souls_mod.client.gui.ClientSoulData.get());
+            currentSouls.removeIf(soul -> soul.customName().equals(selected.customName));
+            com.munrag.soulsmod.souls_mod.client.gui.ClientSoulData.set(currentSouls);
+
+            if (selectedIndex >= mobList.size()) {
+                selectedIndex = Math.max(0, mobList.size() - 1);
+            }
+            updatePreviewEntity();
+
+        }).bounds(libX, libY, 75, 18).build());
     }
 
     // --- NUEVO: Nuestro propio detector de clics para la lista ---
@@ -96,6 +121,10 @@ public class MonarchArmyScreen extends Screen {
     }
 
     private void updatePreviewEntity() {
+        if (mobList.isEmpty()) {
+            this.previewEntity = null;
+            return;
+        }
         if (this.minecraft != null && this.minecraft.level != null) {
             this.previewEntity = mobList.get(selectedIndex).type.create(this.minecraft.level);
             if (this.previewEntity instanceof net.minecraft.world.entity.Mob mob) {
@@ -136,17 +165,19 @@ public class MonarchArmyScreen extends Screen {
         }
 
         // --- 4. ESTADÍSTICAS ---
-        MobEntry sel = mobList.get(selectedIndex);
-        int tx = leftPos + 195;
-        int ty = topPos + 25;
+        if (!mobList.isEmpty()) {
+            MobEntry sel = mobList.get(selectedIndex);
+            int tx = leftPos + 195;
+            int ty = topPos + 25;
 
-        guiGraphics.drawString(this.font, "§7NAME: §f" + sel.customName, tx, ty, 0xFFFFFF);
-        guiGraphics.drawString(this.font, "§7HP: §f" + sel.hp, tx, ty + 12, 0xFFFFFF);
-        guiGraphics.drawString(this.font, "§7ARMOR: §f" + sel.armor, tx, ty + 24, 0xFFFFFF);
-        guiGraphics.drawString(this.font, "§7DAMAGE: §f" + sel.damage, tx, ty + 36, 0xFFFFFF);
-        guiGraphics.drawString(this.font, "§7MANA COST: §b" + sel.mana, tx, ty + 48, 0xFFFFFF);
+            guiGraphics.drawString(this.font, "§7NAME: §f" + sel.customName, tx, ty, 0xFFFFFF);
+            guiGraphics.drawString(this.font, "§7HP: §f" + sel.hp, tx, ty + 12, 0xFFFFFF);
+            guiGraphics.drawString(this.font, "§7ARMOR: §f" + sel.armor, tx, ty + 24, 0xFFFFFF);
+            guiGraphics.drawString(this.font, "§7DAMAGE: §f" + sel.damage, tx, ty + 36, 0xFFFFFF);
+            guiGraphics.drawString(this.font, "§7MANA COST: §b" + sel.mana, tx, ty + 48, 0xFFFFFF);
 
-        guiGraphics.drawWordWrap(this.font, Component.literal("§8" + sel.description), tx, ty + 62, 75, 0xFFFFFF);
+            guiGraphics.drawWordWrap(this.font, Component.literal("§8" + sel.description), tx, ty + 62, 75, 0xFFFFFF);
+        }
 
         // --- 5. INVENTARIO ---
         guiGraphics.drawString(this.font, "§7INVENTORY:", leftPos + 105, topPos + 130, 0xFFFFFF);
