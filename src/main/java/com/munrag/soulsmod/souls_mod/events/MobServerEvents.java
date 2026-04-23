@@ -11,6 +11,8 @@ import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 import net.neoforged.neoforge.event.entity.living.LivingConversionEvent;
 
 import com.munrag.soulsmod.souls_mod.entity.ai.FollowMonarchGoal;
+import com.munrag.soulsmod.souls_mod.entity.ai.MonarchHurtByTargetGoal;
+import com.munrag.soulsmod.souls_mod.entity.ai.MonarchHurtTargetGoal;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import java.util.UUID;
@@ -24,6 +26,9 @@ public class MobServerEvents {
             if (mob.hasData(ModAttachments.OWNER_UUID)) {
                 // Clear the target selector to make the mob completely neutral
                 mob.targetSelector.removeAllGoals((goal) -> true);
+
+                mob.targetSelector.addGoal(1, new MonarchHurtByTargetGoal(mob));
+                mob.targetSelector.addGoal(2, new MonarchHurtTargetGoal(mob));
 
                 // Also clear standard goals just to be safe they don't do weird vanilla AI stuff,
                 // but the prompt only explicitly asked for targetSelector.
