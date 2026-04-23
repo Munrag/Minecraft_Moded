@@ -70,9 +70,35 @@ public class FollowMonarchGoal extends Goal {
     public void tick() {
         if (this.owner != null) {
             this.mob.getLookControl().setLookAt(this.owner, 10.0F, (float)this.mob.getMaxHeadXRot());
-            if (--this.timeToRecalcPath <= 0) {
+
+            if (this.mob.distanceToSqr(this.owner) > 144.0D) {
+                this.teleportToOwner();
+            } else if (--this.timeToRecalcPath <= 0) {
                 this.timeToRecalcPath = 10;
                 this.mob.getNavigation().moveTo(this.owner, this.speedModifier);
+            }
+        }
+    }
+
+    private void teleportToOwner() {
+        net.minecraft.core.BlockPos ownerPos = this.owner.blockPosition();
+        net.minecraft.world.level.Level level = this.mob.level();
+
+        for (int i = 0; i < 10; i++) {
+            int dx = this.mob.getRandom().nextInt(7) - 3;
+            int dy = this.mob.getRandom().nextInt(5) - 2;
+            int dz = this.mob.getRandom().nextInt(7) - 3;
+
+            net.minecraft.core.BlockPos targetPos = ownerPos.offset(dx, dy, dz);
+
+            boolean hasBlockBelow = !level.getBlockState(targetPos.below()).getCollisionShape(level, targetPos.below()).isEmpty();
+            boolean isSpaceEmpty = level.getBlockState(targetPos).getCollisionShape(level, targetPos).isEmpty()
+                                && level.getBlockState(targetPos.above()).getCollisionShape(level, targetPos.above()).isEmpty();
+
+            if (hasBlockBelow && isSpaceEmpty) {
+                this.mob.randomTeleport(targetPos.getX() + 0.5D, targetPos.getY(), targetPos.getZ() + 0.5D, false);
+                this.mob.getNavigation().stop();
+                return;
             }
         }
     }
