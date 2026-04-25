@@ -60,10 +60,8 @@ public class SoulEntity extends Entity {
 
             // Las interfaces gráficas SOLO existen del lado del Cliente
             if (this.level().isClientSide()) {
-                // Abrimos la pantalla y le pasamos ESTA alma exacta
-                net.minecraft.client.Minecraft.getInstance().setScreen(
-                        new com.munrag.soulsmod.souls_mod.client.gui.SoulCaptureScreen(this)
-                );
+                // Abrimos la pantalla y le pasamos ESTA alma exacta, delegando al helper del cliente
+                com.munrag.soulsmod.souls_mod.client.ClientScreenHelper.openSoulCaptureScreen(this);
             }
 
             // Le decimos al juego que la interacción fue un éxito para que haga la animación de la mano

@@ -1,6 +1,5 @@
 package com.munrag.soulsmod.souls_mod.network;
 
-import com.munrag.soulsmod.souls_mod.client.ClientManaData;
 import com.munrag.soulsmod.souls_mod.registry.ModAttachments;
 import com.munrag.soulsmod.souls_mod.world.mana.ManaServerEvents;
 import com.munrag.soulsmod.souls_mod.world.mana.PlayerMana;
@@ -27,7 +26,7 @@ public class ModNetwork {
                 ManaSyncPayload.STREAM_CODEC,
                 (payload, context) -> {
                     context.enqueueWork(() -> {
-                        ClientManaData.set(payload.mana());
+                        com.munrag.soulsmod.souls_mod.client.ClientManaData.set(payload.mana());
                     });
                 }
         );
