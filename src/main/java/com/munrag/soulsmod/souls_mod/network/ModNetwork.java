@@ -57,6 +57,20 @@ public class ModNetwork {
                             // ¿Tiene suficiente maná?
                             if (manaData.getCurrentMana() >= payload.manaCost()) {
 
+                                // --- LÍMITE DE INVOCACIÓN ÚNICA Y CUSTOM NAME ---
+                                java.util.List<net.minecraft.world.entity.Mob> existingMobs = player.level().getEntitiesOfClass(
+                                        net.minecraft.world.entity.Mob.class,
+                                        player.getBoundingBox().inflate(256)
+                                );
+
+                                for (net.minecraft.world.entity.Mob mob : existingMobs) {
+                                    if (mob.hasData(ModAttachments.OWNER_UUID) && mob.getData(ModAttachments.OWNER_UUID).equals(player.getUUID())) {
+                                        if (mob.hasCustomName() && mob.getCustomName().getString().equals(payload.customName())) {
+                                            return; // Ya existe una invocación con este nombre y dueño, no invocar ni gastar maná.
+                                        }
+                                    }
+                                }
+
                                 // 1. Le restamos el maná y le avisamos a su pantalla que se actualice
                                 manaData.setCurrentMana(manaData.getCurrentMana() - payload.manaCost());
                                 ManaServerEvents.syncMana(player);
@@ -69,6 +83,7 @@ public class ModNetwork {
                                         entity.setPos(player.getX(), player.getY(), player.getZ());
                                         // Asignamos el UUID del jugador usando el nuevo attachment
                                         entity.setData(ModAttachments.OWNER_UUID, player.getUUID());
+                                        entity.setCustomName(net.minecraft.network.chat.Component.literal(payload.customName()));
                                         player.level().addFreshEntity(entity);
                                     }
                                 }
@@ -116,6 +131,21 @@ public class ModNetwork {
                 (payload, context) -> {
                     context.enqueueWork(() -> {
                         if (context.player() instanceof net.minecraft.server.level.ServerPlayer player) {
+
+                            java.util.List<net.minecraft.world.entity.Mob> existingMobs = player.level().getEntitiesOfClass(
+                                    net.minecraft.world.entity.Mob.class,
+                                    player.getBoundingBox().inflate(256)
+                            );
+
+                            for (net.minecraft.world.entity.Mob mob : existingMobs) {
+                                if (mob.hasData(ModAttachments.OWNER_UUID) && mob.getData(ModAttachments.OWNER_UUID).equals(player.getUUID())) {
+                                    if (mob.hasCustomName() && mob.getCustomName().getString().equals(payload.customName())) {
+                                        mob.discard();
+                                        break;
+                                    }
+                                }
+                            }
+
                             com.munrag.soulsmod.souls_mod.world.soul.PlayerSouls soulData = player.getData(com.munrag.soulsmod.souls_mod.registry.ModAttachments.PLAYER_SOULS);
                             soulData.removeSoul(payload.customName());
                             context.reply(new SoulSyncPayload(soulData.getSouls()));

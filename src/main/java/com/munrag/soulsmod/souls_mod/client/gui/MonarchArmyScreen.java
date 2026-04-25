@@ -68,7 +68,7 @@ public class MonarchArmyScreen extends Screen {
             }
 
             // ¡Enviamos la carta al Servidor!
-            net.neoforged.neoforge.network.PacketDistributor.sendToServer(new com.munrag.soulsmod.souls_mod.network.SummonMobPayload(entityId, selected.mana));
+            net.neoforged.neoforge.network.PacketDistributor.sendToServer(new com.munrag.soulsmod.souls_mod.network.SummonMobPayload(entityId, selected.mana, selected.customName));
 
             // Cerramos el menú automáticamente para que puedas ver a tu sombra aparecer y seguir peleando
             this.minecraft.setScreen(null);

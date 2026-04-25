@@ -57,6 +57,29 @@ public class MobServerEvents {
             if (event.getSource().getEntity() instanceof Mob attacker && attacker.hasData(ModAttachments.OWNER_UUID)) {
                 event.setCanceled(true);
             }
+        } else if (event.getEntity() instanceof Mob victim && victim.hasData(ModAttachments.OWNER_UUID)) {
+            UUID ownerUuid = victim.getData(ModAttachments.OWNER_UUID);
+            if (event.getSource().getEntity() instanceof Player attacker) {
+                if (ownerUuid.equals(attacker.getUUID())) {
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLogin(net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof net.minecraft.server.level.ServerPlayer player) {
+            com.munrag.soulsmod.souls_mod.world.soul.PlayerSouls soulData = player.getData(ModAttachments.PLAYER_SOULS);
+            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player, new com.munrag.soulsmod.souls_mod.network.SoulSyncPayload(soulData.getSouls()));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRespawn(net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerRespawnEvent event) {
+        if (event.getEntity() instanceof net.minecraft.server.level.ServerPlayer player) {
+            com.munrag.soulsmod.souls_mod.world.soul.PlayerSouls soulData = player.getData(ModAttachments.PLAYER_SOULS);
+            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(player, new com.munrag.soulsmod.souls_mod.network.SoulSyncPayload(soulData.getSouls()));
         }
     }
 
