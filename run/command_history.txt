@@ -1,9 +1,3 @@
-/give Munrag minecraft:experience_bottle 20
-/experience set Munrag 0
-/experience query Munrag levels 1
-/experience set Munrag 1 levels
-/experience set Munrag 0 levels
-/give Munrag souls_mod:monarch_book
 /experience add Munrag 15 levels
 /give Munrag minecraft:potion
 /time set day
@@ -25,3 +19,32 @@
 /give Dev souls_mod:monarch_book
 /give Dev minecraft:dirt 60
 /give Dev minecraft:drowned_spawn_egg 50
+/give Dev minecraft:slime
+/give Dev minecraft:slime 1
+/give Dev minecraft:slime_spawn_egg 10
+/give Dev minecraft:creeper_spawn_egg 10
+/give Dev minecraft:chicken_spawn_egg 20
+/give Dev minecraft:zombie_spawn_egg
+/time set night
+/give Dev minecraft:piglin_spawn_egg 20
+/give Dev minecraft:witch_spawn_egg 10
+/give Dev minecraft:skeleton_spawn_egg 10
+/give Dev minecraft:vindicator_spawn_egg
+/give Dev minecraft:vindicator_spawn_egg 10
+/give Dev minecraft:enderman_spawn_egg 10
+/give Dev minecraft:endermite_spawn_egg 10
+/give Dev minecraft:zombie_villager_spawn_egg
+/give Dev minecraft:zombie_villager_spawn_egg 10
+/give Dev minecraft:ghast_spawn_egg 10
+/give Dev minecraft:phantom_spawn_egg 10
+/give Dev minecraft:guardian_spawn_egg 10
+/give Dev minecraft:warden_spawn_egg 10
+/give Dev minecraft:vindicator_spawn_egg 15
+/attribute Dev neoforge:creative_flight
+/attribute Dev neoforge:creative_flight base set 1
+/experience add Dev 50 levels
+/give Dev souls_mod:monarch_book
+/give Dev bow 1
+/give Dev minecraft:spectral_arrow 100
+/give Dev minecraft:zoglin_spawn_egg 5
+/attribute Dev minecraft:generic.attack_damage base set 100
