@@ -5,7 +5,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
-public record SummonMobPayload(String entityId, int manaCost) implements CustomPacketPayload {
+public record SummonMobPayload(String entityId, int manaCost, String customName) implements CustomPacketPayload {
 
     // La etiqueta de nuestro paquete (viaja del Cliente -> al Servidor)
     public static final Type<SummonMobPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath("souls_mod", "summon_mob"));
@@ -15,8 +15,9 @@ public record SummonMobPayload(String entityId, int manaCost) implements CustomP
             (buf, payload) -> {
                 buf.writeUtf(payload.entityId()); // Escribe el nombre del mob
                 buf.writeInt(payload.manaCost()); // Escribe el costo
+                buf.writeUtf(payload.customName());
             },
-            buf -> new SummonMobPayload(buf.readUtf(), buf.readInt()) // Lee ambos datos al llegar
+            buf -> new SummonMobPayload(buf.readUtf(), buf.readInt(), buf.readUtf()) // Lee ambos datos al llegar
     );
 
     @Override
